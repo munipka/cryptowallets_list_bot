@@ -60,12 +60,13 @@ async def user_check(user_id):
             return True
 
 
-async def select_address(user_id):
+async def select_address(user_id, name):
     """loads user`s address"""
     async with UseDatabase(dbname) as cursor:
         _SQL = """SELECT address FROM addresses
-        WHERE user_id=?;"""
-        await cursor.execute(_SQL, (user_id,))
+        WHERE user_id=?
+        AND name=?;"""
+        await cursor.execute(_SQL, (user_id, name))
         res = await cursor.fetchall()
         return res
 
