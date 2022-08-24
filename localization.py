@@ -8,7 +8,6 @@ def get_language(lang_code) -> str:
 
 
 def get_string(lang_code: str, string_id: str) -> str:
-
     lang = get_language(lang_code)
     try:
         return all_strings[lang][string_id]
@@ -17,13 +16,11 @@ def get_string(lang_code: str, string_id: str) -> str:
         return "ERR_NO_STRING"
 
 
-
 en_text_start = """<a href="http://imgs.xkcd.com/comics/password_strength.png">&#8203;</a>\
 You can use this bot to generate <a href="http://xkcd.com/936/">readable passwords</a>.
 Press "[ / ]" to choose from presets of different strength or use /generate command to send " \
 custom password (configurable in /settings)
 If you would like to see the source code or get help, simply press /help."""
-
 
 en_text_settings_choose = """Here are your current settings:
 <b>Number of words</b>: {num_of_words!s}
@@ -56,7 +53,6 @@ ru_text_settings_choose = """Ваши настройки:
 <b>Разделители между словами</b>: {separators}
 Используйте кнопки ниже для изменения настроек.
 Затем вызовите команду /generate для генерации пароля с этими настройками."""
-
 
 all_strings = {
     "en": {
@@ -94,8 +90,11 @@ all_strings = {
         "wallets": "Выберите один из своих сохраненных кошельков:",
         "edit": "Изменить",
         "delete": "Удалить",
+        "delete_sure": "Вы действительно хотите удалить кошелек *{}*?",
+        "deleted": "Вы удалили кошелек *{}*\!\n/help \- команды бота",
         "share": "Поделиться",
         "back_to_list": "<- Назад к списку",
+        "back": "<- Назад",
         "regenerate": "🔄 Новый пароль",
         "no": "Нет",
         "yes": "Да",
