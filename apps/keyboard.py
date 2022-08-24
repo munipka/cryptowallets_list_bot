@@ -1,6 +1,6 @@
 from aiogram import types
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from apps.common import cb_wallet, cb_menu, cb_actions
+from apps.common import cb_wallets, cb_menu, cb_actions
 from apps.database import load_names
 from localization import get_string
 
@@ -27,7 +27,7 @@ async def list_of_wallets(user_id: int):
         keyboard = InlineKeyboardMarkup(row_width=2)
         content = await load_names(user_id)
         for item in content:
-            button = InlineKeyboardButton(text=item[0], callback_data=cb_wallet.new(name=item[0]))
+            button = InlineKeyboardButton(text=item[0], callback_data=cb_wallets.new(name=item[0]))
             keyboard.insert(button)
         return keyboard
     except Exception as e:
@@ -69,7 +69,22 @@ async def delete_menu_sure(language, name):
             InlineKeyboardButton(text=get_string(language, "no"),
                                  callback_data=cb_menu.new(action="no_delete")),
             InlineKeyboardButton(text=get_string(language, "back"),
-                                 callback_data=cb_wallet.new(name=name))
+                                 callback_data=cb_wallets.new(name=name))
+        ]
+        keyboard.add(*buttons)
+        return keyboard
+    except Exception as e:
+        print(e)
+
+
+async def edit_menu(language):
+    try:
+        keyboard = InlineKeyboardMarkup()
+        buttons = [
+            InlineKeyboardButton(text=get_string(language, "edit_name"),
+                                 callback_data=cb_menu.new(action="yes_clear")),
+            InlineKeyboardButton(text=get_string(language, "edit_address"),
+                                 callback_data=cb_menu.new(action="no_clear")),
         ]
         keyboard.add(*buttons)
         return keyboard

@@ -3,8 +3,6 @@ import asyncio
 import config
 from apps.DBcm import UseDatabase
 
-import json
-
 dbname = config.database_name
 
 
