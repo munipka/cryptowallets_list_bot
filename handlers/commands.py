@@ -1,9 +1,9 @@
 from aiogram import Dispatcher, types
 from apps.keyboard import menu
 from localization import get_string
-from apps.database import load_data
+from apps.database import load_data, load_names
 
-from apps.keyboard import list_of_wallets
+from apps.keyboard import list_of_wallets, clear_menu
 
 
 async def cmd_start(message: types.Message):
@@ -30,21 +30,26 @@ async def show_list(message: types.Message):
 
 async def clear(message: types.Message):
     try:
-        await message.answer(get_string(message.from_user.language_code, "clear"))
-    except:
-        pass
+        await message.answer(get_string(message.from_user.language_code, "clear"),
+                             parse_mode="MarkdownV2",
+                             reply_markup=await clear_menu(message.from_user.language_code))
+    except Exception as e:
+        print(e)
 
 
 async def wallets(message: types.Message):
     try:
-        await message.answer(get_string(message.from_user.language_code, "wallets"),
-                             reply_markup=await list_of_wallets(message.from_user.id))
+        if len(await load_names(message.from_user.id)) == 0:
+            await message.answer(get_string(message.from_user.language_code, 'empty_list'))
+        else:
+            await message.answer(get_string(message.from_user.language_code, "wallets"),
+                                 reply_markup=await list_of_wallets(message.from_user.id))
     except Exception as e:
         print(e)
 
 
 def register_commands(dp: Dispatcher):
-    dp.register_message_handler(cmd_start, commands="start")
+    dp.register_message_handler(cmd_start, commands=["start", "help"])
     dp.register_message_handler(add, commands='add')
     dp.register_message_handler(show_list, commands='list')
     dp.register_message_handler(clear, commands='clear')

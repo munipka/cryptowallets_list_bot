@@ -1,4 +1,3 @@
-from itertools import chain
 
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from apps.common import cb_wallet, cb_menu
@@ -31,6 +30,32 @@ async def list_of_wallets(user_id):
         for item in content:
             button = InlineKeyboardButton(text=item[0], callback_data=cb_wallet.new(name=item[0]))
             keyboard.insert(button)
+        return keyboard
+    except Exception as e:
+        print(e)
+
+
+async def clear_menu(language):
+    try:
+        keyboard = InlineKeyboardMarkup()
+        back_button = InlineKeyboardButton(text=get_string(language, "clear_button"),
+                                           callback_data=cb_menu.new(action="clear"))
+        keyboard.add(back_button)
+        return keyboard
+    except Exception as e:
+        print(e)
+
+
+async def clear_menu_sure(language):
+    try:
+        keyboard = InlineKeyboardMarkup()
+        buttons = [
+            InlineKeyboardButton(text=get_string(language, "yes"),
+                                 callback_data=cb_menu.new(action="yes_clear")),
+            InlineKeyboardButton(text=get_string(language, "no"),
+                                 callback_data=cb_menu.new(action="no_clear")),
+        ]
+        keyboard.add(*buttons)
         return keyboard
     except Exception as e:
         print(e)
