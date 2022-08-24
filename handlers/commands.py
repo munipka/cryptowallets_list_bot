@@ -38,7 +38,7 @@ async def clear(message: types.Message):
 async def wallets(message: types.Message):
     try:
         await message.answer(get_string(message.from_user.language_code, "wallets"),
-                             reply_markup=await list_of_wallets(message))
+                             reply_markup=await list_of_wallets(message.from_user.id))
     except Exception as e:
         print(e)
 
