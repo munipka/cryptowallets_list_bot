@@ -58,7 +58,7 @@ async def user_check(user_id):
             return True
 
 
-async def select_address(user_id, name):
+async def load_address(user_id, name):
     """loads user`s address"""
     async with UseDatabase(dbname) as cursor:
         _SQL = """SELECT address FROM addresses
@@ -84,6 +84,26 @@ async def delete_one(user_id, name):
         WHERE user_id=?
         AND name=?;"""
         await cursor.execute(_SQL, (user_id, name))
+
+
+async def update_name(user_id, old_name, new_name):
+    """"""
+    async with UseDatabase(dbname) as cursor:
+        _SQL = """UPDATE addresses
+        SET name = ?
+        WHERE user_id =?
+        AND name = ?;"""
+        await cursor.execute(_SQL, (new_name, user_id, old_name))
+
+
+async def update_address(user_id, old_name, new_address):
+    """"""
+    async with UseDatabase(dbname) as cursor:
+        _SQL = """UPDATE addresses
+        SET address = ?
+        WHERE user_id = ?
+        and name = ?;"""
+        await cursor.execute(_SQL, (new_address, user_id, old_name))
 
 
 if __name__ == "__main__":

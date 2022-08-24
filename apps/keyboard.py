@@ -1,7 +1,7 @@
 from aiogram import types
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from apps.common import cb_wallets, cb_menu, cb_actions
-from apps.database import load_names
+from apps.database import load_data, load_address
 from localization import get_string
 
 
@@ -9,7 +9,7 @@ def menu(call: types.CallbackQuery, name):
     keyboard = InlineKeyboardMarkup(row_width=2)
     buttons = [
         InlineKeyboardButton(text=get_string(call.from_user.language_code, "edit"),
-                             callback_data=cb_menu.new(action="edit")),
+                             callback_data=cb_actions.new(action="edit", name=name)),
         InlineKeyboardButton(text=get_string(call.from_user.language_code, "delete"),
                              callback_data=cb_actions.new(action="delete", name=name)),
         InlineKeyboardButton(text=get_string(call.from_user.language_code, "share"),
@@ -25,7 +25,7 @@ def menu(call: types.CallbackQuery, name):
 async def list_of_wallets(user_id: int):
     try:
         keyboard = InlineKeyboardMarkup(row_width=2)
-        content = await load_names(user_id)
+        content = await load_data(user_id)
         for item in content:
             button = InlineKeyboardButton(text=item[0], callback_data=cb_wallets.new(name=item[0]))
             keyboard.insert(button)
@@ -77,16 +77,26 @@ async def delete_menu_sure(language, name):
         print(e)
 
 
-async def edit_menu(language):
+async def edit_menu(call, name):
     try:
-        keyboard = InlineKeyboardMarkup()
+        keyboard = InlineKeyboardMarkup(row_width=2)
         buttons = [
-            InlineKeyboardButton(text=get_string(language, "edit_name"),
-                                 callback_data=cb_menu.new(action="yes_clear")),
-            InlineKeyboardButton(text=get_string(language, "edit_address"),
-                                 callback_data=cb_menu.new(action="no_clear")),
+            InlineKeyboardButton(text=get_string(call.from_user.language_code, "edit_name"),
+                                 callback_data=cb_actions.new(action="edit_name", name=name)),
+            InlineKeyboardButton(text=get_string(call.from_user.language_code, "edit_address"),
+                                 callback_data=cb_actions.new(action="edit_address", name=name)),
+            InlineKeyboardButton(text=get_string(call.from_user.language_code, "back"),
+                                 callback_data=cb_wallets.new(name=name))
+
         ]
         keyboard.add(*buttons)
         return keyboard
     except Exception as e:
         print(e)
+
+
+def cancel_button():
+    """makes cancel button"""
+    keyboard = InlineKeyboardMarkup()
+    keyboard.add(InlineKeyboardButton(text='Отмена', callback_data=cb_menu.new(action='cancel')))
+    return keyboard

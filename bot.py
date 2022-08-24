@@ -5,6 +5,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 from handlers.commands import register_commands
 from handlers.callbacks import register_callbacks
+from handlers.register import register_state_callbacks
 
 import config
 
@@ -19,6 +20,7 @@ async def main():
 
     register_commands(dp)
     register_callbacks(dp)
+    register_state_callbacks(dp)
 
     await dp.start_polling(bot)
 
