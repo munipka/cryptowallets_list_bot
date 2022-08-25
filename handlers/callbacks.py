@@ -1,5 +1,4 @@
 from aiogram import types, Dispatcher
-from aiogram.utils import callback_data
 
 from apps.common import cb_menu, cb_wallets, cb_actions
 from apps.database import load_address, delete_all, delete_one
@@ -33,6 +32,7 @@ async def launch_edit_menu_call(call: types.CallbackQuery, callback_data: dict):
         text = get_string(call.from_user.language_code, 'edit_choice')
         await call.message.edit_text(text.format(name, address[0][0]), parse_mode="MarkdownV2",
                                      reply_markup=await edit_menu(call, name))
+        await call.answer()
     except Exception as e:
         print(e)
 

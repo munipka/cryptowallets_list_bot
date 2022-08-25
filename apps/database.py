@@ -46,18 +46,6 @@ async def load_names(user_id):
         return res
 
 
-async def user_check(user_id):
-    """checks is ID is in a DB"""
-    async with UseDatabase(dbname) as cursor:
-        _SQL = """SELECT* FROM addresses WHERE user_id=?;"""
-        await cursor.execute(_SQL, (user_id,))
-        res = await cursor.fetchone()
-        if res is None:
-            return False
-        else:
-            return True
-
-
 async def load_address(user_id, name):
     """loads user`s address"""
     async with UseDatabase(dbname) as cursor:
@@ -68,6 +56,16 @@ async def load_address(user_id, name):
         res = await cursor.fetchall()
         return res
 
+
+async def search_wallet(user_id, search_query):
+    """"""
+    async with UseDatabase(dbname) as cursor:
+        _SQL = """SELECT name, address FROM addresses
+        WHERE user_id = ?
+        AND name LIKE ?;"""
+        await cursor.execute(_SQL, (user_id, '%'+search_query+'%'))
+        content = await cursor.fetchall()
+        return content
 
 async def delete_all(user_id):
     """deletes all user`s data"""

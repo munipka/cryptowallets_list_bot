@@ -12,111 +12,114 @@ def get_string(lang_code: str, string_id: str) -> str:
     try:
         return all_strings[lang][string_id]
     except KeyError:
-        # TODO: log this error
         return "ERR_NO_STRING"
 
 
-en_text_start = """<a href="http://imgs.xkcd.com/comics/password_strength.png">&#8203;</a>\
-You can use this bot to generate <a href="http://xkcd.com/936/">readable passwords</a>.
-Press "[ / ]" to choose from presets of different strength or use /generate command to send " \
-custom password (configurable in /settings)
-If you would like to see the source code or get help, simply press /help."""
+en_text_start = """Hi!\nCommands for the bot:\n/add - add wallet
+/list - address list\n/wallets - edit wallets\n/clear - clear ALL data\n\n
+Among other things, this bot can send addresses directly to chats.
+To do this, enter @wallets_list_bot in any chat, find the necessary wallet and click on it."""
 
-en_text_settings_choose = """Here are your current settings:
-<b>Number of words</b>: {num_of_words!s}
-<b>Extra prefixes/suffixes</b>: {prefixes}
-<b>Separators between words</b>: {separators}
-You can edit these settings using buttons below.
-After you're satisfied with results, use /generate command"""
+en_add_name = """_Try to name the wallet so that it is convenient to search for it later\.
+⚠Do not use the names already used\._
+*Write the name of the wallet:*"""
 
-en_text_help = """<a href="http://imgs.xkcd.com/comics/password_strength.png">&#8203;</a>\
-The idea of this bot came from <a href="http://xkcd.com/936/">XKCD 936</a> strip. So I decided to make \
-a bot which will help me quickly generate strong and readable passwords without having me open " \
-KeePass or any other app."""
+en_added = """✅The wallet has been successfully added!\n/add - add another one
+/list - list of all wallets
+/wallets - edit data\n/help - bot commands"""
 
-ru_text_help = """<a href="http://imgs.xkcd.com/comics/password_strength.png">&#8203;</a>\
-Идея по созданию этого бота пришла ко мне после прочтения комикса <a href="http://xkcd.com/936/">XKCD 936</a>. \
-После чего я решил создать инструмент для удобной генерации сложных, но читабельных паролей без необходимости \
-открывать KeePass или что-либо ещё."""
-
-ru_text_start = """Привет!\nКоманды для бота:\n/add - добавление адреса кошелька
-/list - список адресов\n/wallets - редактировать кошельки\n/clear - очистить ВСЕ данные\n
+ru_text_start = """Привет!\nКоманды для бота:\n/add - добавить кошелёк
+/list - список кошельков\n/wallets - редактировать кошельки\n/clear - очистить ВСЕ данные\n\n
 Помимо прочего, данный бот может отправлять адреса непосредственно в чаты.
 Для этого введите @wallets_list_bot в любом чате, найдите необходимый кошелек и нажмите на него."""
 
-ru_add_name = """_Постарайтесь назвать кошелек так, чтобы потом было удобно искать\. Не используйте одинаковые имена\._
+ru_add_name = """_Постарайтесь назвать кошелек так, чтобы потом было удобно его искать\.
+⚠Не используйте уже использованные имена\._
 *Напишите имя кошелька:*"""
-ru_added = """Кошелек успешно добавлен!\n/list - список всех кошельков
-/wallets - редактировать данные\n/help - команды бота"""
 
-ru_text_settings_choose = """Ваши настройки:
-<b>Количество слов</b>: {num_of_words!s}
-<b>Префиксы/суффиксы</b>: {prefixes}
-<b>Разделители между словами</b>: {separators}
-Используйте кнопки ниже для изменения настроек.
-Затем вызовите команду /generate для генерации пароля с этими настройками."""
+ru_added = """✅Кошелек успешно добавлен!\n/add - добавить еще один
+/list - список всех кошельков
+/wallets - редактировать данные\n/help - команды бота"""
 
 all_strings = {
     "en": {
         "start": en_text_start,
-        "help": en_text_help,
-        "settings": en_text_settings_choose,
-        "plusword": "+ word",
-        "minusword": "- word",
-        "pluspref": "Add prefix & suffix",
-        "minuspref": "Remove prefix & suffix",
-        "plussep": "Add separators",
-        "minussep": "Remove separators",
-        "regenerate": "🔄 Regenerate",
+        "help": en_text_start,
+        "add_wallet_name": en_add_name,
+        "add_wallet_address": "Name entered!\n\nNow enter the address:",
+        "added": en_added,
+        "wal_name": "Wallet name: ",
+        "wal_address": "Wallet address: ",
+        "list": "List of all wallets",
+        "help_query": "Help",
+        "help_query_text": "In any chat, write @wallets_list_bot, enter the wallet name and click to send it",
+        "empty_list": "⚠You don't have any saved wallets yet.\n/add - to add",
+        "empty_list_query": "The list is empty, click here➕",
+        "found_nothing": "Not found with this name",
+        "add_new": "➕Add new",
+        "clear": "By clicking on the button, you will delete *all* data:",
+        "clear_button": "❌Delete all data!",
+        "clear_sure": "⚠You will lose all data! Are you sure?",
+        "cleared": "All data has been deleted!\n/help - view commands",
+        "wallets": "Choose one of your saved wallets:",
+        "edit": "✏Edit",
+        "edit_choice": "Current name: *{}*\nCurrent address: {}",
+        "edit_name": "✏Edit name",
+        "edit_name_process": "Current wallet name: {}\n_Enter a new name:_",
+        "edit_name_set": "✅The name has been changed!\n\n/help - view commands\n/wallets - edit wallets",
+        "name_exists": "⚠A wallet with that name already exists!\nEnter another name:",
+        "edit_address": "✏Edit address",
+        "edit_address_process": "_Enter a new address:_",
+        "edit_address_set": "✅The address has been changed!\n\n/help - view commands\n/wallets - edit wallets",
+        "delete": "❌Delete",
+        "delete_sure": "⚠Do you really want to delete the wallet *{}*?",
+        "deleted": "You deleted the wallet *{}*\!\n\n/help \- bot commands",
+        "share": "Share wallet",
+        "back_to_list": "<- Back to the list",
+        "back": "<- Back",
         "no": "No",
         "yes": "Yes",
-        "inline_weak_title": "Weak password",
-        "inline_weak_description": "2 words, no digits or separators",
-        "inline_normal_title": "Normal password",
-        "inline_normal_description": "3 words, random UPPERCASE, separated by numbers",
-        "inline_strong_title": "Strong password",
-        "inline_strong_description": "4 words, random UPPERCASE, separated by numbers or special characters"
+        "cancel": "Cancel",
+        "canceled": "The operation was canceled!\n/help - view commands"
     },
     "ru": {
         "start": ru_text_start,
-        "help": ru_text_help,
-        "settings": ru_text_settings_choose,
+        "help": ru_text_start,
         "add_wallet_name": ru_add_name,
         "add_wallet_address": "Имя введено!\n\nТеперь введите адрес:",
         "added": ru_added,
-        "wal_name": "Имя кошелька:",
-        "wal_address": "Адрес кошелька:",
-        "empty_list": "У вас еще нет сохранненых кошельков.\n/add - чтобы добавить",
+        "wal_name": "Имя кошелька: ",
+        "wal_address": "Адрес кошелька: ",
+        "list": "Список всех кошельков",
+        "help_query": "Помощь",
+        "help_query_text": "В любом чате напишите @wallets_list_bot, введите имя кошелька и нажмите, чтобы отправить его",
+        "empty_list": "⚠У вас еще нет сохранненых кошельков.\n/add - чтобы добавить",
+        "empty_list_query": "Список пуст, нажмите➕",
+        "found_nothing": "Не найдено с таким именем",
+        "add_new": "➕Добавить новый",
         "clear": "Нажав на кнопку, Вы удалите *все* данные:",
-        "clear_button": "Удалить все данные!",
-        "clear_sure": "Вы потеряете все данные! Вы уверены?",
+        "clear_button": "❌Удалить все данные!",
+        "clear_sure": "⚠Вы потеряете все данные! Вы уверены?",
         "cleared": "Все данные были удалены!\n/help - посмотреть команды",
         "wallets": "Выберите один из своих сохраненных кошельков:",
-        "edit": "Изменить",
+        "edit": "✏Изменить",
         "edit_choice": "Текущее имя: *{}*\nТекущий адрес: {}",
-        "edit_name": "Изменить имя",
+        "edit_name": "✏Изменить имя",
         "edit_name_process": "Текущее имя кошелька: {}\n_Введи новое имя:_",
-        "edit_name_set": "Имя было изменено!\n\n/help - посмотреть команды\n/wallets - редактировать кошельки",
-        "name_exists": "Кошелек с таким именем уже существует!\nВведите другое имя:",
-        "edit_address": "Изменить адрес",
+        "edit_name_set": "✅Имя было изменено!\n\n/help - посмотреть команды\n/wallets - редактировать кошельки",
+        "name_exists": "⚠Кошелек с таким именем уже существует!\nВведите другое имя:",
+        "edit_address": "✏Изменить адрес",
         "edit_address_process": "_Введите новый адрес:_",
-        "edit_address_set": "Адрес был изменен!\n\n/help - посмотреть команды\n/wallets - редактировать кошельки",
-        "delete": "Удалить",
-        "delete_sure": "Вы действительно хотите удалить кошелек *{}*?",
+        "edit_address_set": "✅Адрес был изменен!\n\n/help - посмотреть команды\n/wallets - редактировать кошельки",
+        "delete": "❌Удалить",
+        "delete_sure": "⚠Вы действительно хотите удалить кошелек *{}*?",
         "deleted": "Вы удалили кошелек *{}*\!\n\n/help \- команды бота",
         "share": "Поделиться адресом",
         "back_to_list": "<- Назад к списку",
         "back": "<- Назад",
-        "regenerate": "🔄 Новый пароль",
         "no": "Нет",
         "yes": "Да",
         "cancel": "Отмена",
-        "canceled": "Операция была отменена!\n/help - посмотреть команды",
-        "": "Слабый пароль",
-        "inline_weak_description": "2 слова строчными буквами, без разделителей",
-        "inline_normal_title": "Средний пароль",
-        "inline_normal_description": "3 слова, случайных выбор ПРОПИСНЫХ слов, случайные цифры в качестве разделителей",
-        "inline_strong_title": "Надёжный пароль",
-        "inline_strong_description": "4 слова, случайных выбор ПРОПИСНЫХ слов, цифры и спецсимволы в качестве разделителей"
+        "canceled": "Операция была отменена!\n/help - посмотреть команды"
     }
 }
