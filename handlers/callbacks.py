@@ -17,12 +17,15 @@ async def launch_list_of_wallets_call(call: types.CallbackQuery):
 
 
 async def launch_wallet_menu_call(call: types.CallbackQuery, callback_data: dict):
-    name = callback_data["name"]
-    address = await load_address(call.from_user.id, name)
-    text = get_string(call.from_user.language_code, 'wal_name') + f' *{name}*\n'
-    text += get_string(call.from_user.language_code, 'wal_address') + f'*{address[0][0]}*'
-    await call.message.edit_text(text, parse_mode="MarkdownV2", reply_markup=menu(call, name))
-    await call.answer()
+    try:
+        name = callback_data["name"]
+        address = await load_address(call.from_user.id, name)
+        text = get_string(call.from_user.language_code, 'wal_name') + f' *{name}*\n'
+        text += get_string(call.from_user.language_code, 'wal_address') + f'*{address[0][0]}*'
+        await call.message.edit_text(text, parse_mode="MarkdownV2", reply_markup=menu(call, name))
+        await call.answer()
+    except Exception as e:
+        print(e)
 
 
 async def launch_edit_menu_call(call: types.CallbackQuery, callback_data: dict):
@@ -61,20 +64,29 @@ async def yes_delete(call: types.CallbackQuery, callback_data: dict):
 
 
 async def cancel(call: types.CallbackQuery):
-    await call.message.edit_text(get_string(call.from_user.language_code, "canceled"))
-    await call.answer()
+    try:
+        await call.message.edit_text(get_string(call.from_user.language_code, "canceled"))
+        await call.answer()
+    except Exception as e:
+        print(e)
 
 
 async def launch_clear_menu_call(call: types.CallbackQuery):
-    await call.message.edit_text(get_string(call.from_user.language_code, 'clear_sure'),
-                                 reply_markup=await clear_menu_sure(call.from_user.language_code))
-    await call.answer()
+    try:
+        await call.message.edit_text(get_string(call.from_user.language_code, 'clear_sure'),
+                                     reply_markup=await clear_menu_sure(call.from_user.language_code))
+        await call.answer()
+    except Exception as e:
+        print(e)
 
 
 async def yes_clear(call: types.CallbackQuery):
-    await delete_all(call.from_user.id)
-    await call.message.edit_text(get_string(call.from_user.language_code, "cleared"))
-    await call.answer()
+    try:
+        await delete_all(call.from_user.id)
+        await call.message.edit_text(get_string(call.from_user.language_code, "cleared"))
+        await call.answer()
+    except Exception as e:
+        print(e)
 
 
 def register_callbacks(dp: Dispatcher):

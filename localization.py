@@ -53,7 +53,7 @@ all_strings = {
         "list": "List of all wallets",
         "help_query": "Help",
         "help_query_text": "In any chat, write @wallets_list_bot, enter the wallet name and click to send it",
-        "empty_list": "⚠You don't have any saved wallets yet.\n/add - to add",
+        "empty_list": "⚠You don't have any saved wallets yet.\n/add - to add a wallet",
         "empty_list_query": "The list is empty, click here➕",
         "found_nothing": "Not found with this name",
         "add_new": "➕Add new",

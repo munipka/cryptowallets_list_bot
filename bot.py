@@ -7,7 +7,7 @@ from handlers.commands import register_commands
 from handlers.callbacks import register_callbacks
 from handlers.register import register_state_callbacks
 from handlers.inline import register_inline
-
+from apps.database import create_tables
 import config
 
 
@@ -18,7 +18,7 @@ async def main():
         level=logging.INFO,
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
     )
-
+    await create_tables()
     register_commands(dp)
     register_callbacks(dp)
     register_state_callbacks(dp)

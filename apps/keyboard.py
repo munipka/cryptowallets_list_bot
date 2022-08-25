@@ -6,20 +6,23 @@ from localization import get_string
 
 
 def menu(call: types.CallbackQuery, name):
-    keyboard = InlineKeyboardMarkup(row_width=2)
-    buttons = [
-        InlineKeyboardButton(text=get_string(call.from_user.language_code, "edit"),
-                             callback_data=cb_actions.new(action="edit", name=name)),
-        InlineKeyboardButton(text=get_string(call.from_user.language_code, "delete"),
-                             callback_data=cb_actions.new(action="delete", name=name)),
-        InlineKeyboardButton(text=get_string(call.from_user.language_code, "share"),
-                             switch_inline_query=name)
-    ]
-    back_button = InlineKeyboardButton(text=get_string(call.from_user.language_code, "back_to_list"),
-                                       callback_data=cb_menu.new(action="wallets_call"))
-    keyboard.add(*buttons)
-    keyboard.add(back_button)
-    return keyboard
+    try:
+        keyboard = InlineKeyboardMarkup(row_width=2)
+        buttons = [
+            InlineKeyboardButton(text=get_string(call.from_user.language_code, "edit"),
+                                 callback_data=cb_actions.new(action="edit", name=name)),
+            InlineKeyboardButton(text=get_string(call.from_user.language_code, "delete"),
+                                 callback_data=cb_actions.new(action="delete", name=name)),
+            InlineKeyboardButton(text=get_string(call.from_user.language_code, "share"),
+                                 switch_inline_query=name)
+        ]
+        back_button = InlineKeyboardButton(text=get_string(call.from_user.language_code, "back_to_list"),
+                                           callback_data=cb_menu.new(action="wallets_call"))
+        keyboard.add(*buttons)
+        keyboard.add(back_button)
+        return keyboard
+    except Exception as e:
+        print(e)
 
 
 async def list_of_wallets(user_id: int):
@@ -96,15 +99,21 @@ async def edit_menu(call, name):
 
 def cancel_button(language):
     """makes cancel button"""
-    keyboard = InlineKeyboardMarkup()
-    keyboard.add(InlineKeyboardButton(text=get_string(language, "cancel"),
-                                      callback_data=cb_menu.new(action='cancel')))
-    return keyboard
+    try:
+        keyboard = InlineKeyboardMarkup()
+        keyboard.add(InlineKeyboardButton(text=get_string(language, "cancel"),
+                                          callback_data=cb_menu.new(action='cancel')))
+        return keyboard
+    except Exception as e:
+        print(e)
 
 
 def cancel_add_button(language):
     """makes cancel button while adding a wallet"""
-    keyboard = InlineKeyboardMarkup()
-    keyboard.add(InlineKeyboardButton(text=get_string(language, "cancel"),
-                                      callback_data=cb_menu.new(action='cancel_add')))
-    return keyboard
+    try:
+        keyboard = InlineKeyboardMarkup()
+        keyboard.add(InlineKeyboardButton(text=get_string(language, "cancel"),
+                                          callback_data=cb_menu.new(action='cancel_add')))
+        return keyboard
+    except Exception as e:
+        print(e)

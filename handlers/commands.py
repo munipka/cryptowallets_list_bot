@@ -7,7 +7,10 @@ from apps.keyboard import list_of_wallets, clear_menu
 
 
 async def cmd_start(message: types.Message):
-    await message.answer(get_string(message.from_user.language_code, "start"))
+    try:
+        await message.answer(get_string(message.from_user.language_code, "start"))
+    except Exception as e:
+        print(e)
 
 
 async def show_list(message: types.Message):
