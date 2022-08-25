@@ -87,7 +87,6 @@ async def edit_menu(call, name):
                                  callback_data=cb_actions.new(action="edit_address", name=name)),
             InlineKeyboardButton(text=get_string(call.from_user.language_code, "back"),
                                  callback_data=cb_wallets.new(name=name))
-
         ]
         keyboard.add(*buttons)
         return keyboard
@@ -95,8 +94,17 @@ async def edit_menu(call, name):
         print(e)
 
 
-def cancel_button():
+def cancel_button(language):
     """makes cancel button"""
     keyboard = InlineKeyboardMarkup()
-    keyboard.add(InlineKeyboardButton(text='Отмена', callback_data=cb_menu.new(action='cancel')))
+    keyboard.add(InlineKeyboardButton(text=get_string(language, "cancel"),
+                                      callback_data=cb_menu.new(action='cancel')))
+    return keyboard
+
+
+def cancel_add_button(language):
+    """makes cancel button while adding a wallet"""
+    keyboard = InlineKeyboardMarkup()
+    keyboard.add(InlineKeyboardButton(text=get_string(language, "cancel"),
+                                      callback_data=cb_menu.new(action='cancel_add')))
     return keyboard
