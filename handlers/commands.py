@@ -1,5 +1,4 @@
 from aiogram import Dispatcher, types
-from apps.keyboard import menu
 from localization import get_string
 from apps.database import load_data, load_names
 

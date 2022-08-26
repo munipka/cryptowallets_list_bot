@@ -1,5 +1,3 @@
-import asyncio
-
 import config
 from apps.DBcm import UseDatabase
 
@@ -58,7 +56,6 @@ async def load_names(user_id):
         print(e)
 
 
-
 async def load_address(user_id, name):
     """loads user`s address"""
     try:
@@ -80,7 +77,7 @@ async def search_wallet(user_id, search_query):
             _SQL = """SELECT name, address FROM addresses
             WHERE user_id = ?
             AND name LIKE ?;"""
-            await cursor.execute(_SQL, (user_id, '%'+search_query+'%'))
+            await cursor.execute(_SQL, (user_id, '%' + search_query + '%'))
             content = await cursor.fetchall()
             return content
     except Exception as e:

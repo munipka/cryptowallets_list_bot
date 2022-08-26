@@ -1,7 +1,7 @@
 from aiogram import types
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from apps.common import cb_wallets, cb_menu, cb_actions
-from apps.database import load_data, load_address
+from apps.database import load_data
 from localization import get_string
 
 
