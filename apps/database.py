@@ -44,7 +44,7 @@ async def load_data(user_id: int):
 
 
 async def load_names(user_id: int):
-    """"""
+    """returns all the names of wallets for user"""
     try:
         async with UseDatabase(dbname) as cursor:
             _SQL = """SELECT name FROM addresses
