@@ -1,2 +1,2 @@
-bot_token = "5127938226:AAGspgcQIEeOycVAAL39dzmmAO2zGDnadeo"
+bot_token = "YOUR_token"
 database_name = "database/bot.db"
