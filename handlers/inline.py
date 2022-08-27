@@ -11,6 +11,7 @@ help_icon = 'https://i.ibb.co/sWQQKbb/help.png'
 
 
 async def show_list_query(query: types.InlineQuery):
+    """Inline query handler of an empty query"""
     try:
         content = await load_data(query.from_user.id)
         if len(content) == 0:
@@ -30,6 +31,7 @@ async def show_list_query(query: types.InlineQuery):
 
 
 async def inline_send_wallet(query: types.InlineQuery):
+    """Inline query handler of not empty query. Handles searching query in a database and returns results"""
     try:
         if len(query.query) == 0:
             text = await show_list_query(query)
@@ -94,3 +96,4 @@ async def inline_send_wallet(query: types.InlineQuery):
 
 def register_inline(dp: Dispatcher):
     dp.register_inline_handler(inline_send_wallet)
+    dp.register_inline_handler(show_list_query)

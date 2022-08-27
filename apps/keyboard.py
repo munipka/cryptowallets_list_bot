@@ -5,7 +5,21 @@ from apps.database import load_data
 from localization import get_string
 
 
-def menu(call: types.CallbackQuery, name):
+async def list_of_wallets(user_id: int):
+    """returns inline keyboard with user`s wallets"""
+    try:
+        keyboard = InlineKeyboardMarkup(row_width=2)
+        content = await load_data(user_id)
+        for item in content:
+            button = InlineKeyboardButton(text=item[0], callback_data=cb_wallets.new(name=item[0]))
+            keyboard.insert(button)
+        return keyboard
+    except Exception as e:
+        print(e)
+
+
+def menu(call: types.CallbackQuery, name: str):
+    """returns inline keyboard with a wallet menu"""
     try:
         keyboard = InlineKeyboardMarkup(row_width=2)
         buttons = [
@@ -25,19 +39,8 @@ def menu(call: types.CallbackQuery, name):
         print(e)
 
 
-async def list_of_wallets(user_id: int):
-    try:
-        keyboard = InlineKeyboardMarkup(row_width=2)
-        content = await load_data(user_id)
-        for item in content:
-            button = InlineKeyboardButton(text=item[0], callback_data=cb_wallets.new(name=item[0]))
-            keyboard.insert(button)
-        return keyboard
-    except Exception as e:
-        print(e)
-
-
 async def clear_menu(language: str):
+    """returns inline button for clear menu """
     try:
         keyboard = InlineKeyboardMarkup()
         back_button = InlineKeyboardButton(text=get_string(language, "clear_button"),
@@ -49,6 +52,7 @@ async def clear_menu(language: str):
 
 
 async def clear_menu_sure(language: str):
+    """returns yes and no inline buttons"""
     try:
         keyboard = InlineKeyboardMarkup()
         buttons = [
@@ -63,7 +67,8 @@ async def clear_menu_sure(language: str):
         print(e)
 
 
-async def delete_menu_sure(language, name):
+async def delete_menu_sure(language: str, name: str):
+    """returns yes and no inline buttons"""
     try:
         keyboard = InlineKeyboardMarkup(row_width=2)
         buttons = [
@@ -80,7 +85,8 @@ async def delete_menu_sure(language, name):
         print(e)
 
 
-async def edit_menu(call, name):
+async def edit_menu(call: types.CallbackQuery, name: str):
+    """returns inline buttons of edit menu"""
     try:
         keyboard = InlineKeyboardMarkup(row_width=2)
         buttons = [
@@ -97,8 +103,8 @@ async def edit_menu(call, name):
         print(e)
 
 
-def cancel_button(language):
-    """makes cancel button"""
+def cancel_button(language: str):
+    """returns cancel inline button"""
     try:
         keyboard = InlineKeyboardMarkup()
         keyboard.add(InlineKeyboardButton(text=get_string(language, "cancel"),
@@ -108,8 +114,8 @@ def cancel_button(language):
         print(e)
 
 
-def cancel_add_button(language):
-    """makes cancel button while adding a wallet"""
+def cancel_add_button(language: str):
+    """returns cancel inline button while adding a wallet"""
     try:
         keyboard = InlineKeyboardMarkup()
         keyboard.add(InlineKeyboardButton(text=get_string(language, "cancel"),

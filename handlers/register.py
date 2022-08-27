@@ -4,7 +4,7 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 
 from apps.common import cb_menu, cb_actions
 from apps.keyboard import cancel_button, cancel_add_button
-from apps.database import update_name, load_names, update_address, save_address
+from apps.database import update_name, load_names, update_address, save_data
 
 from localization import get_string
 
@@ -27,6 +27,7 @@ class AddWallet(StatesGroup):
 
 
 async def edit_name_start(call: types.CallbackQuery, callback_data: dict, state: FSMContext):
+    """starts an editing name of a wallets process"""
     try:
         old_name = callback_data["name"]
         text = get_string(call.from_user.language_code, "edit_name_process")
@@ -40,7 +41,8 @@ async def edit_name_start(call: types.CallbackQuery, callback_data: dict, state:
         print(e)
 
 
-async def new_name_set(message, state: FSMContext):
+async def new_name_set(message: types.Message, state: FSMContext):
+    """saves a new name and finishes editing name process"""
     try:
         names_already_exist = list(chain.from_iterable(await load_names(message.from_user.id)))
         if message.text in names_already_exist:
@@ -61,6 +63,7 @@ async def new_name_set(message, state: FSMContext):
 
 
 async def edit_address_start(call: types.CallbackQuery, callback_data: dict, state: FSMContext):
+    """starts an editing address of a wallets process"""
     try:
         old_name = callback_data["name"]
         text = get_string(call.from_user.language_code, "edit_address_process")
@@ -74,7 +77,8 @@ async def edit_address_start(call: types.CallbackQuery, callback_data: dict, sta
         print(e)
 
 
-async def new_address_set(message, state: FSMContext):
+async def new_address_set(message: types.Message, state: FSMContext):
+    """saves a new address and finishes editing address process"""
     try:
         await state.update_data(new_address_set=message.text)
         data = await state.get_data()
@@ -89,6 +93,7 @@ async def new_address_set(message, state: FSMContext):
 
 
 async def add_start(message: types.Message):
+    """starts an adding a new wallet process"""
     try:
         text = get_string(message.from_user.language_code, "add_wallet_name")
         await AddWallet.name.set()
@@ -100,6 +105,7 @@ async def add_start(message: types.Message):
 
 
 async def name_set(message: types.Message, state: FSMContext):
+    """gets a name of a new wallets"""
     try:
         names_already_exist = list(chain.from_iterable(await load_names(message.from_user.id)))
         if message.text in names_already_exist:
@@ -117,11 +123,12 @@ async def name_set(message: types.Message, state: FSMContext):
 
 
 async def address_set(message: types.Message, state: FSMContext):
+    """gets an address of a new wallet and finishes the process of adding a new wallet"""
     try:
         address = message.text
         data = await state.get_data()
         name = data["name"]
-        await save_address(message.from_user.id, name, address)
+        await save_data(message.from_user.id, name, address)
         text = get_string(message.from_user.language_code, "added")
         await message.answer(text)
         await state.finish()
@@ -129,7 +136,8 @@ async def address_set(message: types.Message, state: FSMContext):
         print(e)
 
 
-async def cancel(call, state):
+async def cancel(call: types.CallbackQuery, state: FSMContext):
+    """handles cancel operation while editing"""
     try:
         keyboard = types.InlineKeyboardMarkup()
         text = get_string(call.from_user.language_code, "back_to_list")
@@ -143,7 +151,8 @@ async def cancel(call, state):
         print(e)
 
 
-async def add_cancel(call, state):
+async def add_cancel(call: types.CallbackQuery, state: FSMContext):
+    """handles cancel operation while adding"""
     try:
         await call.message.edit_text(text=get_string(call.from_user.language_code, "canceled"))
         await state.finish()

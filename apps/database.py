@@ -5,7 +5,7 @@ dbname = config.database_name
 
 
 async def create_tables():
-    """create tables"""
+    """creates necessary for the bot tables"""
     try:
         async with UseDatabase(dbname) as cursor:
             _SQL = """CREATE TABLE IF NOT EXISTS addresses(
@@ -19,8 +19,8 @@ async def create_tables():
         print(e)
 
 
-async def save_address(user_id: int, name: str, address: str):
-    """"""
+async def save_data(user_id: int, name: str, address: str):
+    """saves all data to database"""
     try:
         async with UseDatabase(dbname) as cursor:
             _SQL = """INSERT INTO addresses
@@ -30,8 +30,8 @@ async def save_address(user_id: int, name: str, address: str):
         print(e)
 
 
-async def load_data(user_id):
-    """"""
+async def load_data(user_id: int):
+    """returns name and address of a wallet for a user"""
     try:
         async with UseDatabase(dbname) as cursor:
             _SQL = """SELECT name, address FROM addresses 
@@ -43,7 +43,7 @@ async def load_data(user_id):
         print(e)
 
 
-async def load_names(user_id):
+async def load_names(user_id: int):
     """"""
     try:
         async with UseDatabase(dbname) as cursor:
@@ -56,8 +56,8 @@ async def load_names(user_id):
         print(e)
 
 
-async def load_address(user_id, name):
-    """loads user`s address"""
+async def load_address(user_id: int, name: str):
+    """loads wallet`s address by it`s name"""
     try:
         async with UseDatabase(dbname) as cursor:
             _SQL = """SELECT address FROM addresses
@@ -70,8 +70,8 @@ async def load_address(user_id, name):
         print(e)
 
 
-async def search_wallet(user_id, search_query):
-    """"""
+async def search_wallet(user_id: int, search_query: str):
+    """returns results of searching from database"""
     try:
         async with UseDatabase(dbname) as cursor:
             _SQL = """SELECT name, address FROM addresses
@@ -84,7 +84,7 @@ async def search_wallet(user_id, search_query):
         print(e)
 
 
-async def delete_all(user_id):
+async def delete_all(user_id: int):
     """deletes all user`s data"""
     try:
         async with UseDatabase(dbname) as cursor:
@@ -95,7 +95,7 @@ async def delete_all(user_id):
         print(e)
 
 
-async def delete_one(user_id, name):
+async def delete_one(user_id: int, name: str):
     """deletes one chosen address"""
     try:
         async with UseDatabase(dbname) as cursor:
@@ -107,8 +107,8 @@ async def delete_one(user_id, name):
         print(e)
 
 
-async def update_name(user_id, old_name, new_name):
-    """"""
+async def update_name(user_id: int, old_name: str, new_name: str):
+    """updates a name of a wallet in database"""
     try:
         async with UseDatabase(dbname) as cursor:
             _SQL = """UPDATE addresses
@@ -120,8 +120,8 @@ async def update_name(user_id, old_name, new_name):
         print(e)
 
 
-async def update_address(user_id, old_name, new_address):
-    """"""
+async def update_address(user_id: int, old_name: str, new_address: str):
+    """updates an address of a wallet in database"""
     try:
         async with UseDatabase(dbname) as cursor:
             _SQL = """UPDATE addresses

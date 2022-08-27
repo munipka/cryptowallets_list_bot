@@ -8,6 +8,7 @@ from apps.keyboard import menu, list_of_wallets, clear_menu_sure, delete_menu_su
 
 
 async def launch_list_of_wallets_call(call: types.CallbackQuery):
+    """Callback handler of launching user`s list of wallets"""
     try:
         await call.message.edit_text(text=get_string(call.from_user.language_code, "wallets"),
                                      reply_markup=await list_of_wallets(call.from_user.id))
@@ -17,6 +18,7 @@ async def launch_list_of_wallets_call(call: types.CallbackQuery):
 
 
 async def launch_wallet_menu_call(call: types.CallbackQuery, callback_data: dict):
+    """Callback handler of launching a wallet menu"""
     try:
         name = callback_data["name"]
         address = await load_address(call.from_user.id, name)
@@ -29,6 +31,7 @@ async def launch_wallet_menu_call(call: types.CallbackQuery, callback_data: dict
 
 
 async def launch_edit_menu_call(call: types.CallbackQuery, callback_data: dict):
+    """Callback handler of edit menu of a wallet"""
     try:
         name = callback_data["name"]
         address = await load_address(call.from_user.id, name)
@@ -41,6 +44,7 @@ async def launch_edit_menu_call(call: types.CallbackQuery, callback_data: dict):
 
 
 async def launch_delete_menu_call(call: types.CallbackQuery, callback_data: dict):
+    """Callback handler of delete menu of a wallet"""
     try:
         name = callback_data["name"]
         text = get_string(call.from_user.language_code, 'delete_sure')
@@ -53,6 +57,7 @@ async def launch_delete_menu_call(call: types.CallbackQuery, callback_data: dict
 
 
 async def yes_delete(call: types.CallbackQuery, callback_data: dict):
+    """Callback handler of delete button"""
     try:
         name = callback_data["name"]
         await delete_one(call.from_user.id, name)
@@ -64,6 +69,7 @@ async def yes_delete(call: types.CallbackQuery, callback_data: dict):
 
 
 async def cancel(call: types.CallbackQuery):
+    """Callback handler of cancel button"""
     try:
         await call.message.edit_text(get_string(call.from_user.language_code, "canceled"))
         await call.answer()
@@ -72,6 +78,7 @@ async def cancel(call: types.CallbackQuery):
 
 
 async def launch_clear_menu_call(call: types.CallbackQuery):
+    """Callback handler of clear all menu of a user"""
     try:
         await call.message.edit_text(get_string(call.from_user.language_code, 'clear_sure'),
                                      reply_markup=await clear_menu_sure(call.from_user.language_code))
@@ -81,6 +88,7 @@ async def launch_clear_menu_call(call: types.CallbackQuery):
 
 
 async def yes_clear(call: types.CallbackQuery):
+    """Callback handler of 'clear all' button"""
     try:
         await delete_all(call.from_user.id)
         await call.message.edit_text(get_string(call.from_user.language_code, "cleared"))

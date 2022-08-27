@@ -8,6 +8,7 @@ def get_language(lang_code) -> str:
 
 
 def get_string(lang_code: str, string_id: str) -> str:
+    """returns a string according to string_id"""
     lang = get_language(lang_code)
     try:
         return all_strings[lang][string_id]
