@@ -19,7 +19,6 @@ async def set_commands(dp: Dispatcher):
         BotCommand(command="list", description="list of all addresses"),
         BotCommand(command="wallets", description="edit my wallets"),
         BotCommand(command="clear", description="delete all data"),
-        BotCommand(command="faucet", description="faucet for test tokens"),
         BotCommand(command="help", description="help")
     ]
     await dp.bot.set_my_commands(bot_commands)
